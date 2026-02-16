@@ -231,3 +231,25 @@ imageForm.addEventListener("submit", (e) => {
 
   reader.readAsDataURL(file);
 });
+
+
+const adImages = [
+  "https://picsum.photos/id/1050/1200/400",
+  "https://picsum.photos/id/1067/1200/400",
+  "https://picsum.photos/id/1069/1200/400",
+];
+
+const adImgEl = document.getElementById("ad-img");
+
+let adIndex = 0;
+
+function showAd(index) {
+  adImgEl.src = adImages[index];
+}
+
+showAd(adIndex);
+
+setInterval(() => {
+  adIndex = (adIndex + 1) % adImages.length;
+  showAd(adIndex);
+}, 3000);
