@@ -8,7 +8,16 @@
 <body>
 
 <header>
-    <h1>My Feed</h1>
+  <h1>My Feed</h1>
+
+  <div class="menu">
+    <button id="menu-button">Menu ☰</button>
+    <div id="dropdown-menu" class="dropdown hidden">
+      <li><a href="#">Feed</a></li>
+      <li><a href="#">Gallery</a></li>
+      <li><a href="#">Games</a></li>
+    </div>
+  </div>
 </header>
 
 <section class="controls">
@@ -20,6 +29,11 @@
 <p id="status" aria-live="polite"></p>
 
 <main>
+    <form id="post-form">
+        <input id="post-title" type="text" placeholder="Title" required />
+        <textarea id="post-content" placeholder="Content" required></textarea>
+        <button type="submit">Add</button>
+    </form>
     <div id="feed-container"></div>
 </main>
 

@@ -6,21 +6,22 @@ async function fetchArticles() {
 }
 
 
-function createCard(article) {
-    const card = document.createElement("div");
-    card.classList.add("card");
+function createCard(item) {
+  const card = document.createElement("div");
+  card.classList.add("card");
 
-    const title = document.createElement("h3");
-    title.textContent = article.setup;
+  const title = document.createElement("h3");
+  title.textContent = item.title ?? item.setup ?? "Untitled";
 
-    const content = document.createElement("p");
-    content.textContent = article.delivery;
+  const content = document.createElement("p");
+  content.textContent = item.body ?? item.delivery ?? item.joke ?? "";
 
-    card.appendChild(title);
-    card.appendChild(content);
+  card.appendChild(title);
+  card.appendChild(content);
 
-    return card;
+  return card;
 }
+
 
 function displayFeed(data) {
     const container = document.getElementById("feed-container");
@@ -34,23 +35,13 @@ function displayFeed(data) {
 }
 
 
-(async () => {
-  try {
-    const data = await fetchArticles();
-    displayFeed(data);
-  } catch (err) {
-    console.error(err);
-  }
-})();
-
-
-let allItems = [];
-
 const statusEl = document.getElementById("status");
 
 function setStatus(msg) {
   statusEl.textContent = msg;
 }
+
+let allItems = [];
 
 async function loadFeed() {
   try {
@@ -82,3 +73,30 @@ document.getElementById("refresh").addEventListener("click", loadFeed);
 
 // initial load
 loadFeed();
+
+function nextId() {
+  const ids = allItems.map(x => Number(x.id)).filter(Number.isFinite);
+  return (ids.length ? Math.max(...ids) : 0) + 1;
+}
+
+document.getElementById("post-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const titleEl = document.getElementById("post-title");
+  const contentEl = document.getElementById("post-content");
+
+  const newPost = {
+    id: nextId(),
+    title: titleEl.value.trim(),
+    body: contentEl.value.trim(),
+  };
+
+  // Add at the top of the feed
+  allItems.unshift(newPost);
+
+  // Re-render
+  displayFeed(allItems);
+
+  // Reset form
+  e.target.reset();
+});
