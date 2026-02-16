@@ -100,3 +100,58 @@ document.getElementById("post-form").addEventListener("submit", (e) => {
   // Reset form
   e.target.reset();
 });
+
+
+const images = [
+  { id: 1, title: "Mountain", url: "https://picsum.photos/id/1018/800/600" },
+  { id: 2, title: "Forest",   url: "https://picsum.photos/id/1020/800/600" },
+  { id: 3, title: "Sea",      url: "https://picsum.photos/id/1011/800/600" },
+  { id: 4, title: "Road",     url: "https://picsum.photos/id/1033/800/600" },
+  { id: 5, title: "City",     url: "https://picsum.photos/id/1015/800/600" },
+  { id: 6, title: "Sky",      url: "https://picsum.photos/id/1003/800/600" },
+];
+
+const galleryEl = document.getElementById("gallery");
+const previewImg = document.getElementById("preview-img");
+const previewTitle = document.getElementById("preview-title");
+
+function setPreview(item) {
+  previewImg.src = item.url;
+  previewImg.alt = item.title;
+  previewTitle.textContent = item.title;
+}
+
+function renderGallery(data) {
+  galleryEl.innerHTML = "";
+
+  data.forEach((item) => {
+    const card = document.createElement("div");
+    card.className = "thumb";
+
+    const img = document.createElement("img");
+    img.src = item.url;
+    img.alt = item.title;
+
+    card.appendChild(img);
+
+    card.addEventListener("click", () => setPreview(item));
+
+    galleryEl.appendChild(card);
+  });
+
+  // default preview (first image)
+  if (data.length) setPreview(data[0]);
+}
+
+// view toggle
+document.getElementById("view-grid").addEventListener("click", () => {
+  galleryEl.classList.add("gallery--grid");
+  galleryEl.classList.remove("gallery--list");
+});
+
+document.getElementById("view-list").addEventListener("click", () => {
+  galleryEl.classList.add("gallery--list");
+  galleryEl.classList.remove("gallery--grid");
+});
+
+renderGallery(images);

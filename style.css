@@ -1,47 +1,125 @@
+/* ===== GLOBAL ===== */
+
 body {
-    font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
+/* ===== FEED ===== */
+
 #feed-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
 }
 
 .card {
-    border: 1px solid #ccc;
-    padding: 15px;
-    border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+/* ===== MENU / DROPDOWN ===== */
+
+.menu {
+  position: relative;
+  display: inline-block;
+}
+
+#menu-button {
+  cursor: pointer;
 }
 
 #dropdown-menu {
   position: absolute;
-  top: 40px;
+  top: 100%;
   left: 0;
+
   background: white;
   border: 1px solid #ccc;
   list-style: none;
   padding: 10px;
   margin: 0;
+
+  min-width: 150px;
+  z-index: 1000;
+
+  display: none;
+}
+
+.menu:hover #dropdown-menu {
+  display: block; 
 }
 
 #dropdown-menu li {
   margin: 5px 0;
 }
 
-.menu { position: relative; display: inline-block; }
-
-.dropdown {
-  position: absolute;
-  top: 100%;
-  left: 0;
+#dropdown-menu a {
+  text-decoration: none;
+  color: black;
 }
 
-.menu:hover #dropdown-menu {
+#dropdown-menu a:hover {
+  text-decoration: underline;
+}
+
+/* ===== GALLERY ===== */
+
+.gallery-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  align-items: start;
+  padding: 20px;
+}
+
+.gallery {
+  display: grid;
+  gap: 16px;
+}
+
+.gallery--grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.gallery--list {
+  grid-template-columns: 1fr;
+}
+
+.thumb {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #fff;
+  transition: transform 0.2s ease;
+}
+
+.thumb:hover {
+  transform: scale(1.02);
+}
+
+.thumb img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
   display: block;
 }
 
-.hidden {
-  display: none;
+.preview {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 12px;
+  background: #fff;
+}
+
+.preview img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
 }
