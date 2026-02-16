@@ -4,8 +4,9 @@ This project is a small dynamic website built using only HTML, CSS and Vanilla J
 
 The goal was to practice core JavaScript concepts like variables, arrays, functions, DOM manipulation, and event handling.
 
-What it does
-Feed
+What it does:
+
+Feed!
 
 Fetches jokes from an API
 
@@ -19,7 +20,7 @@ Lets the user add new posts
 
 Lets the user delete only the posts they added
 
-Gallery
+Gallery:
 
 Displays images in grid or list view
 
@@ -29,13 +30,13 @@ Upload your own images
 
 Delete only the images you uploaded
 
-Rotating Banner
+Rotating Banner:
 
 Shows rotating images above the gallery
 
 Automatically changes every few seconds
 
-Dropdown Menu
+Dropdown Menu:
 
 Simple hover-based menu
 
