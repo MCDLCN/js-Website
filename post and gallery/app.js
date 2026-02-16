@@ -165,7 +165,7 @@ function renderGallery(data) {
             renderGallery(images);
 
             if (wasPreview) {
-            if (images.length) setPreview(images[0]);   
+            if (images.length) setPreview(images[0]);
             else {
                 previewImg.removeAttribute("src");
                 previewImg.alt = "";
