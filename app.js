@@ -104,11 +104,11 @@ document.getElementById("post-form").addEventListener("submit", (e) => {
 
 const images = [
   { id: 1, title: "Mountain", url: "https://picsum.photos/id/1018/800/600" },
-  { id: 2, title: "Forest",   url: "https://picsum.photos/id/1020/800/600" },
-  { id: 3, title: "Sea",      url: "https://picsum.photos/id/1011/800/600" },
-  { id: 4, title: "Road",     url: "https://picsum.photos/id/1033/800/600" },
-  { id: 5, title: "City",     url: "https://picsum.photos/id/1015/800/600" },
-  { id: 6, title: "Sky",      url: "https://picsum.photos/id/1003/800/600" },
+  { id: 2, title: "Bears",   url: "https://picsum.photos/id/1020/800/600" },
+  { id: 3, title: "Lake",      url: "https://picsum.photos/id/1011/800/600" },
+  { id: 4, title: "Train station",     url: "https://picsum.photos/id/1033/800/600" },
+  { id: 5, title: "Fjord",     url: "https://picsum.photos/id/1015/800/600" },
+  { id: 6, title: "Fawn",      url: "https://picsum.photos/id/1003/800/600" },
 ];
 
 const galleryEl = document.getElementById("gallery");
@@ -155,3 +155,38 @@ document.getElementById("view-list").addEventListener("click", () => {
 });
 
 renderGallery(images);
+
+
+function nextImageId() {
+  const ids = images.map(x => Number(x.id)).filter(Number.isFinite);
+  return (ids.length ? Math.max(...ids) : 0) + 1;
+}
+
+const imageForm = document.getElementById("image-form");
+const imageFileEl = document.getElementById("image-file");
+const imageTitleEl = document.getElementById("image-title");
+
+imageForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const file = imageFileEl.files?.[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    const newImage = {
+      id: nextImageId(),
+      title: (imageTitleEl.value || file.name).trim(),
+      url: reader.result, // data:image/... base64
+    };
+
+    images.unshift(newImage);
+    renderGallery(images);
+    setPreview(newImage);
+
+    e.target.reset();
+  };
+
+  reader.readAsDataURL(file);
+});
