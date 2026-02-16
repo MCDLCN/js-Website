@@ -7,17 +7,29 @@ async function fetchArticles() {
 
 
 function createCard(item) {
-  const card = document.createElement("div");
-  card.classList.add("card");
+    const card = document.createElement("div");
+    card.classList.add("card");
 
-  const title = document.createElement("h3");
-  title.textContent = item.title ?? item.setup ?? "Untitled";
+    const title = document.createElement("h3");
+    title.textContent = item.title ?? item.setup ?? "Untitled";
 
-  const content = document.createElement("p");
-  content.textContent = item.body ?? item.delivery ?? item.joke ?? "";
+    const content = document.createElement("p");
+    content.textContent = item.body ?? item.delivery ?? item.joke ?? "";
 
-  card.appendChild(title);
-  card.appendChild(content);
+    card.appendChild(title);
+    card.appendChild(content);
+
+    if (item.isUser === true) {
+        const del = document.createElement("button");
+        del.type = "button";
+        del.textContent = "Delete";
+        del.addEventListener("click", () => {
+            allItems = allItems.filter(x => x.id !== item.id);
+            displayFeed(allItems);
+        });
+        card.appendChild(del);
+    }
+
 
   return card;
 }
@@ -89,6 +101,7 @@ document.getElementById("post-form").addEventListener("submit", (e) => {
     id: nextId(),
     title: titleEl.value.trim(),
     body: contentEl.value.trim(),
+    isUser: true
   };
 
   // Add at the top of the feed
@@ -137,6 +150,33 @@ function renderGallery(data) {
     card.addEventListener("click", () => setPreview(item));
 
     galleryEl.appendChild(card);
+
+    if (item.isUser === true) {
+        const del = document.createElement("button");
+        del.type = "button";
+        del.textContent = "✕";
+        del.addEventListener("click", (e) => {
+            e.stopPropagation(); // don't trigger preview click
+            const wasPreview = previewImg.src === item.url;
+
+            const idx = images.findIndex(x => x.id === item.id);
+            if (idx !== -1) images.splice(idx, 1);
+
+            renderGallery(images);
+
+            if (wasPreview) {
+            if (images.length) setPreview(images[0]);
+            else {
+                previewImg.removeAttribute("src");
+                previewImg.alt = "";
+                previewTitle.textContent = "";
+            }
+            }
+        });
+
+        card.appendChild(del);
+    }
+
   });
 
   // default preview (first image)
@@ -178,7 +218,8 @@ imageForm.addEventListener("submit", (e) => {
     const newImage = {
       id: nextImageId(),
       title: (imageTitleEl.value || file.name).trim(),
-      url: reader.result, // data:image/... base64
+      url: reader.result,
+      isUser: true
     };
 
     images.unshift(newImage);
